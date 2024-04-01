@@ -20,7 +20,13 @@ jobs:
         run: docker inspect test:latest |grep Arch
         
       - name: Run Container
-        run: docker run -t test:latest       
+        run: docker run -d test:latest      
+
+      - name: Show Running Containers
+        run: docker ps
+
+      - name: Show docker images
+        run: docker images
         
   power_job:
     name: Power Image Build
@@ -39,5 +45,11 @@ jobs:
         run: docker inspect test:latest |grep Arch
         
       - name: Run Container
-        run: docker run -t test:latest           
+        run: docker run -d test:latest  
+        
+      - name: Show Running Containers
+        run: docker ps
+
+      - name: Show docker images
+        run: docker images
  
