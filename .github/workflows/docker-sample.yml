@@ -36,28 +36,36 @@ jobs:
       - name: Remove docker image
         run: docker rmi test:latest
         
-  # power_job:
-  #   name: Power Image Build
-  #   runs-on: ubuntu-20.04-ppc64le
-  #   steps:
-  #     - name: Code Checkout
-  #       uses: actions/checkout@v3
+  power_job:
+    name: Power Image Build
+    runs-on: ubuntu-20.04-ppc64le
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
         
-  #     - name: Build Image
-  #       run: |
-  #         sudo chmod 666 /var/run/docker.sock
-  #         cd Server
-  #         docker build -t test:latest .
+      - name: Build Image
+        run: |
+          sudo chmod 666 /var/run/docker.sock
+          cd Server
+          docker build -t test:latest .
         
-  #     - name: Inspect Image Arch
-  #       run: docker inspect test:latest |grep Arch
+      - name: Inspect Image Arch
+        run: docker inspect test:latest |grep Arch
         
-  #     - name: Run Container
-  #       run: docker run -d test:latest  
-        
-  #     - name: Show Running Containers
-      #   run: docker ps
+      - name: Run Container
+        run: docker run -d --name docker_container test:latest      
 
-      # - name: Show docker images
-      #   run: docker images
+      - name: Show Running Containers
+        run: docker ps
+
+      - name: Show docker images
+        run: docker images
+        
+      - name: Stop and Remove container
+        run: |
+          docker stop docker_container
+          docker rm docker_container
+        
+      - name: Remove docker image
+        run: docker rmi test:latest
  
