@@ -56,8 +56,8 @@ jobs:
   #       run: docker run -d test:latest  
         
   #     - name: Show Running Containers
-        run: docker ps
+      #   run: docker ps
 
-      - name: Show docker images
-        run: docker images
+      # - name: Show docker images
+      #   run: docker images
  
