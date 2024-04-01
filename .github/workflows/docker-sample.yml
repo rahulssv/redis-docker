@@ -1,0 +1,43 @@
+name: Docker Sample Workflow
+
+on: workflow_dispatch
+
+
+jobs:
+  amd_job:
+    name: Amd Image Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+        
+      - name: Build Image
+        run: |
+          cd Server
+          docker build -t test:latest .
+        
+      - name: Inspect Image Arch
+        run: docker inspect test:latest |grep Arch
+        
+      - name: Run Container
+        run: docker run -t test:latest       
+        
+  power_job:
+    name: Power Image Build
+    runs-on: ubuntu-20.04-ppc64le
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+        
+      - name: Build Image
+        run: |
+          sudo chmod 666 /var/run/docker.sock
+          cd Server
+          docker build -t test:latest .
+        
+      - name: Inspect Image Arch
+        run: docker inspect test:latest |grep Arch
+        
+      - name: Run Container
+        run: docker run -t test:latest           
+ 
